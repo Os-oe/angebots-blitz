@@ -12,7 +12,7 @@ EXPECT = {
                 "fach": ["Einhebelmischer", "Dichtheitsprüfung", "Eckventile"]},
     "elektro": {"netto": "1.014,00 €", "ust": "192,66 €", "brutto": "1.206,66 €",
                 "fach": ["DIN VDE 0100-600", "Stemm- und Schlitzarbeiten", "NYM-J 3x1,5"]},
-    "maler":   {"netto": "1.038,90 €", "ust": "197,39 €", "brutto": "1.236,29 €",
+    "maler":   {"netto": "921,30 €", "ust": "175,05 €", "brutto": "1.096,35 €",
                 "fach": ["Oberflächengüte Q2", "Dispersionsfarbe", "Malervlies"]},
 }
 CHECKS = []

@@ -171,7 +171,7 @@ def ui_tests():
             check("Skip: Ergebnis in < 8 s statt ~25 s", True)
         except Exception:
             check("Skip: Ergebnis in < 8 s statt ~25 s", False)
-        check("Skip: Summen trotzdem exakt", slow.text_content("[data-testid=sum-brutto]").replace("\xa0", " ").strip() == "1.236,29 €")
+        check("Skip: Summen trotzdem exakt", slow.text_content("[data-testid=sum-brutto]").replace("\xa0", " ").strip() == "1.096,35 €")
         slow.close()
         browser.close()
 

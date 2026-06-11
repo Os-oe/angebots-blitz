@@ -63,13 +63,13 @@ window.SCENARIOS = {
     positionen: [
       { pos: 1, beschreibung: "Abdeck- und Schutzmaßnahmen: Boden, Fenster und Türen mit Folie und Malervlies abdecken und abkleben", menge: 1, einheit: "psch.", ep: 85.0, typ: "lohn" },
       { pos: 2, beschreibung: "Schadhafte Stellen spachteln und schleifen, Oberflächengüte Q2", menge: 12, einheit: "m²", ep: 6.5, typ: "lohn" },
-      { pos: 3, beschreibung: "Wandflächen zweimal streichen, Dispersionsfarbe weiß matt, deckend, inkl. Material", menge: 58, einheit: "m²", ep: 9.8, typ: "lohn" },
+      { pos: 3, beschreibung: "Wandflächen zweimal streichen, Dispersionsfarbe weiß matt, deckend, inkl. Material", menge: 46, einheit: "m²", ep: 9.8, typ: "lohn" },
       { pos: 4, beschreibung: "Deckenfläche zweimal streichen inkl. sauberem Schneiden der Anschlüsse, Dispersionsfarbe weiß", menge: 25, einheit: "m²", ep: 10.5, typ: "lohn" },
       { pos: 5, beschreibung: "An- und Abfahrt inkl. Materialtransport", menge: 1, einheit: "psch.", ep: 45.0, typ: "pauschale" }
     ],
-    netto: 1038.9,
-    ust: 197.39,
-    brutto: 1236.29
+    netto: 921.3,
+    ust: 175.05,
+    brutto: 1096.35
   }
 };
 
