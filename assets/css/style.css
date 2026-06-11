@@ -139,6 +139,9 @@ button { font-family: inherit; cursor: pointer; }
 }
 .tile:hover .tile-play { transform: scale(1.1); }
 .tile-play svg { width: 17px; height: 17px; margin-left: 2px; }
+.tile.audio-on .tile-play { animation: eq-pulse 1s ease-in-out infinite; }
+.tile.audio-on .tile-play svg { margin-left: 0; }
+@keyframes eq-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.14); } }
 .tile-dur { font-size: 12.5px; color: var(--ink-dim); }
 
 /* ---------- Stage ---------- */

@@ -78,16 +78,29 @@
   $("#pdf-btn").addEventListener("click", function () { window.print(); });
 
   /* ---------- Kachel-Audio (optional, TTS-Clips) ---------- */
-  var audioEl = null;
+  var PLAY_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+  var PAUSE_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>';
+  var audioEl = null, audioTileId = null;
+  function setTileAudioUI(id, on) {
+    var tile = document.querySelector('.tile[data-scenario="' + id + '"]');
+    if (!tile) return;
+    tile.classList.toggle("audio-on", on);
+    var icon = tile.querySelector(".tile-play");
+    if (icon) icon.innerHTML = on ? PAUSE_SVG : PLAY_SVG;
+  }
   function playClip(id) {
     stopClip();
     var a = new Audio("assets/audio/" + id + ".mp3");
-    a.addEventListener("error", function () { audioEl = null; }); // kein Clip → stiller Ticker
+    a.addEventListener("error", function () { stopClip(); }); // kein Clip → stiller Ticker
+    a.addEventListener("ended", function () { stopClip(); });
     a.play().catch(function () {});
     audioEl = a;
+    audioTileId = id;
+    setTileAudioUI(id, true);
   }
   function stopClip() {
     if (audioEl) { try { audioEl.pause(); } catch (e) {} audioEl = null; }
+    if (audioTileId) { setTileAudioUI(audioTileId, false); audioTileId = null; }
   }
 
   /* ---------- Dokument rendern ---------- */
@@ -259,7 +272,11 @@
     runScenario(window.SCENARIOS[id], { live: false });
   }
   document.querySelectorAll(".tile").forEach(function (tile) {
-    tile.addEventListener("click", function () { startScenario(tile.getAttribute("data-scenario")); });
+    tile.addEventListener("click", function () {
+      var id = tile.getAttribute("data-scenario");
+      if (audioTileId === id) { stopClip(); return; } // erneuter Klick stoppt die Wiedergabe
+      startScenario(id);
+    });
   });
   document.querySelectorAll(".stage-tab").forEach(function (tab) {
     tab.addEventListener("click", function () { startScenario(tab.getAttribute("data-scenario")); });

@@ -171,6 +171,12 @@ def ui_tests():
         slow.goto(BASE + "/", wait_until="networkidle")  # OHNE fast=1
         slow.click("[data-testid=tile-maler]")
         slow.wait_for_selector("[data-testid=skip-btn]:visible", timeout=5000)
+        # 12b) Kachel-Audio-Feedback: Pause-State während Wiedergabe, erneuter Klick stoppt
+        check("Kachel-Audio: Pause-/Equalizer-State während Wiedergabe",
+              "audio-on" in (slow.get_attribute("[data-testid=tile-maler]", "class") or ""))
+        slow.click("[data-testid=tile-maler]")
+        check("Kachel-Audio: erneuter Klick stoppt Wiedergabe",
+              "audio-on" not in (slow.get_attribute("[data-testid=tile-maler]", "class") or ""))
         slow.wait_for_timeout(1200)
         slow.click("[data-testid=skip-btn]")
         try:
