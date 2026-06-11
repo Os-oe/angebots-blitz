@@ -157,6 +157,13 @@ def ui_tests():
         check("Custom-Brand: Firmenname im Briefkopf", page.text_content("#doc-firm-name") == "Schreinerei Holzwurm GmbH")
         check("Custom-Brand: Monogramm SH", page.text_content("#doc-logo") == "SH")
 
+        # 11b) Umlaute in der generierten Mail-Domain transliteriert (ä→ae ö→oe ü→ue ß→ss)
+        page.evaluate("window.prompt = () => 'Müller & Söhne Straßenbau'; 1")
+        page.click("[data-testid=brand-custom]")
+        meta = page.text_content("#doc-firm-meta") or ""
+        check("Custom-Brand: Umlaut-Mail transliteriert",
+              "info@mueller-soehne-strassenbau.de" in meta, meta)
+
         check("keine JS-Pageerrors", not errors, "; ".join(errors[:3]))
 
         # 12) Excellence: Skip — „Direkt zum Ergebnis" beendet die Show in Sekunden

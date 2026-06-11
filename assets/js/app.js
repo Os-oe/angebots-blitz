@@ -288,10 +288,14 @@
     var hash = 0;
     for (var i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
     var color = CUSTOM_COLORS[hash % CUSTOM_COLORS.length];
+    // Umlaute transliterieren (ä→ae …), bevor daraus eine Domain wird
+    var domain = name.toLowerCase()
+      .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
     window.BRANDS.custom = {
       id: "custom", name: name, mono: mono, color: color,
       tagline: "Dein Gewerk · Deine Stadt", strasse: "Deine Straße 1", ort: "Dein Ort",
-      tel: "0000 / 00 00 00", mail: "info@" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + ".de",
+      tel: "0000 / 00 00 00", mail: "info@" + domain + ".de",
       ust: "DE 000 000 000"
     };
     customChip.innerHTML = '<span class="chip-dot" style="background:' + color + '">' + mono + "</span>" + name;
