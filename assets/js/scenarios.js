@@ -41,7 +41,7 @@ window.SCENARIOS = {
       { pos: 1, beschreibung: "Steckdose UP nachrüsten inkl. Stemm- und Schlitzarbeiten, Leitungsverlegung und Anschluss, Schalterprogramm Standard weiß", menge: 4, einheit: "Stk.", ep: 142.0, typ: "lohn" },
       { pos: 2, beschreibung: "Deckenauslass für LED-Einbauleuchte setzen, inkl. Anschluss und Funktionsprüfung", menge: 2, einheit: "Stk.", ep: 118.0, typ: "lohn" },
       { pos: 3, beschreibung: "Installationsmaterial: Mantelleitung NYM-J 3x1,5 mm², UP-Dosen, Klemmen, Befestigungsmaterial", menge: 1, einheit: "psch.", ep: 96.0, typ: "material" },
-      { pos: 4, beschreibung: "E-Check: Messung und Prüfprotokoll nach DIN VDE 0100-600", menge: 1, einheit: "psch.", ep: 75.0, typ: "lohn" },
+      { pos: 4, beschreibung: "Erstprüfung mit Messprotokoll nach DIN VDE 0100-600", menge: 1, einheit: "psch.", ep: 75.0, typ: "lohn" },
       { pos: 5, beschreibung: "An- und Abfahrt", menge: 1, einheit: "psch.", ep: 39.0, typ: "pauschale" }
     ],
     netto: 1014.0,
