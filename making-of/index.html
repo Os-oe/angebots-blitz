@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Angebots-Blitz — Making-of</title>
+<style>
+  @font-face { font-family: 'Archivo'; src: url('Archivo.ttf'); font-weight: 100 900; }
+  @font-face { font-family: 'Inter'; src: url('Inter-Regular.ttf'); font-weight: 400; }
+  @font-face { font-family: 'Inter'; src: url('Inter-Bold.ttf'); font-weight: 700; }
+  @font-face { font-family: 'Inter'; src: url('Inter-Black.ttf'); font-weight: 900; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #14161b; --bg2: #1b1e25; --panel: #20242d; --panel2: #272c37;
+    --line: #323845; --ink: #f2f3f5; --dim: #aab1bd; --faint: #7c8492;
+    --gelb: #ffc814; --gelb-deep: #e8a200;
+  }
+  body { background: var(--bg); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; font-size: 12.5px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .page { width: 210mm; height: 296mm; padding: 16mm 16mm; page-break-after: always; position: relative; overflow: hidden; background: var(--bg); display: flex; flex-direction: column; }
+  .page:last-child { page-break-after: avoid; }
+  .page.alt { background: var(--bg2); }
+  h2 { font-family: 'Archivo', sans-serif; font-weight: 900; font-size: 24px; letter-spacing: -0.3px; margin-bottom: 13px; line-height: 1.18; }
+  h2 .nr { color: var(--gelb); font-size: 11.5px; font-family: 'Inter'; font-weight: 900; letter-spacing: 2.6px; display: block; margin-bottom: 6px; }
+  p { margin-bottom: 9px; color: var(--dim); }
+  b { font-weight: 700; color: var(--ink); }
+  .accent { color: var(--gelb); } .dimt { color: var(--faint); }
+  .footer { position: absolute; bottom: 9mm; left: 16mm; right: 16mm; display: flex; justify-content: space-between; align-items: center; color: var(--faint); font-size: 9.5px; border-top: 1px solid var(--line); padding-top: 7px; }
+  .footer img { height: 13px; vertical-align: -3px; margin-right: 6px; }
+  img.shot { width: 100%; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 28px -12px rgba(0,0,0,.6); display: block; }
+  .cap { font-size: 9.4px; color: var(--faint); margin: 5px 0 0; line-height: 1.4; }
+
+  /* ── Cover ─────────────────────────────────────── */
+  .cover { justify-content: center; text-align: center; background:
+    radial-gradient(1100px 520px at 50% -8%, rgba(255,200,20,.13), transparent 60%), var(--bg); }
+  .cover .pres { font-size: 11px; font-weight: 700; color: var(--dim); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 22px; }
+  .cover .pres img { height: 24px; vertical-align: -7px; margin-right: 10px; }
+  .cover h1 { font-family: 'Archivo', sans-serif; font-weight: 900; font-size: 39px; line-height: 1.1; letter-spacing: -0.6px; color: var(--ink); margin-bottom: 14px; }
+  .cover h1 em { font-style: normal; color: var(--gelb); }
+  .cover .sub { color: var(--dim); font-size: 13px; max-width: 82%; margin: 0 auto 22px; }
+  .cover img.heroshot { width: 56%; margin: 0 auto 24px; border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 24px 60px -16px rgba(255,200,20,.28); }
+  .cover .stats { display: flex; justify-content: center; gap: 12px; }
+  .cover .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 13px 14px; min-width: 106px; }
+  .cover .stat b { display: block; font-family: 'Archivo', sans-serif; font-weight: 900; font-size: 21px; color: var(--gelb); margin-bottom: 4px; letter-spacing: -0.5px; }
+  .cover .stat span { font-size: 9.4px; color: var(--dim); line-height: 1.35; display: block; }
+
+  /* ── Prompt block ──────────────────────────────── */
+  pre.prompt { background: #0d0f13; color: #d8dce3; border-radius: 10px; border-left: 5px solid var(--gelb); padding: 16px 19px; font-family: Menlo, monospace; font-size: 9.7px; line-height: 1.7; white-space: pre-wrap; }
+  pre.prompt .hl { color: var(--gelb); font-weight: 700; }
+
+  /* ── Phasen ────────────────────────────────────── */
+  .phase { display: flex; gap: 13px; margin-bottom: 12px; }
+  .phase .dot { flex: 0 0 30px; height: 30px; border-radius: 8px; background: var(--panel); border: 2px solid var(--gelb); color: var(--gelb); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; font-family: 'Archivo', sans-serif; }
+  .phase h3 { font-size: 12.5px; font-weight: 700; margin-bottom: 2px; }
+  .phase p { font-size: 11px; margin: 0 0 2px; }
+  .phase .gate { color: var(--gelb-deep); font-size: 10.2px; font-weight: 700; }
+
+  .callout { background: var(--panel); border: 1px solid var(--line); border-left: 5px solid var(--gelb); border-radius: 8px; padding: 12px 15px; font-size: 11.2px; margin: 12px 0; color: var(--dim); }
+
+  table.skills { width: 100%; border-collapse: collapse; font-size: 10.5px; margin: 8px 0 12px; color: var(--dim); }
+  table.skills th { padding: 5px 10px 5px 0; border-bottom: 2px solid var(--gelb); text-align: left; font-size: 9.8px; text-transform: uppercase; letter-spacing: .5px; color: var(--ink); }
+  table.skills td { padding: 6px 10px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.skills td:first-child { white-space: nowrap; font-weight: 700; color: var(--gelb); }
+
+  /* ── Pipeline-Visual ───────────────────────────── */
+  .flow { display: flex; align-items: stretch; gap: 0; margin: 10px 0 4px; }
+  .flow .node { flex: 1; background: var(--panel); border: 1.5px solid var(--line); border-radius: 9px; padding: 11px 9px; text-align: center; display: flex; flex-direction: column; justify-content: flex-start; }
+  .flow .node .ico { font-family: 'Archivo', sans-serif; font-weight: 900; font-size: 16px; color: var(--gelb); display: block; margin-bottom: 6px; }
+  .flow .node b { display: block; font-size: 10px; font-weight: 900; margin-bottom: 3px; }
+  .flow .node span { font-size: 8.7px; color: var(--faint); line-height: 1.4; display: block; }
+  .flow .node.hot { border-color: var(--gelb); background: #25241a; }
+  .flow .arr { flex: 0 0 16px; display: flex; align-items: center; justify-content: center; color: var(--gelb); font-weight: 900; font-size: 13px; }
+
+  ul.biglist { padding-left: 17px; color: var(--dim); }
+  ul.biglist li { margin-bottom: 11px; font-size: 12.2px; }
+
+  .roomy { font-size: 13.2px; }
+  .roomy h2 { margin-bottom: 17px; }
+  .roomy .phase { margin-bottom: 19px; }
+  .roomy .phase .dot { flex: 0 0 32px; height: 32px; font-size: 14px; }
+  .roomy .phase p { font-size: 12.3px; }
+  .roomy .phase h3 { font-size: 14px; margin-bottom: 4px; }
+  .roomy .callout { font-size: 12.3px; padding: 15px 18px; margin-top: 16px; line-height: 1.6; }
+
+  .statstrip { display: flex; gap: 12px; margin-top: 16px; }
+  .statstrip .stat { flex: 1; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 11px; text-align: center; }
+  .statstrip .stat b { display: block; font-family: 'Archivo', sans-serif; font-weight: 900; font-size: 20px; color: var(--gelb); letter-spacing: -0.5px; margin-bottom: 3px; }
+  .statstrip .stat span { font-size: 9.4px; color: var(--dim); line-height: 1.35; display: block; }
+
+  .cta { text-align: center; margin-top: 20px; }
+  .cta .head { font-family: 'Archivo', sans-serif; font-weight: 900; font-size: 21px; letter-spacing: -0.2px; line-height: 1.35; margin-bottom: 12px; }
+  .cta .head em { font-style: normal; color: var(--gelb); }
+  .cta .link { font-weight: 900; font-size: 15px; color: var(--gelb); margin-bottom: 16px; }
+</style>
+</head>
+<body>
+
+<!-- SEITE 1 — Cover -->
+<div class="page cover">
+  <div class="pres"><img src="osai-mark.png" alt="">OsAI präsentiert</div>
+  <h1>Eine Sprachnotiz.<br><em>Ein fertiges Angebot.</em></h1>
+  <p class="sub">Wie <b>Claude Fable 5</b> — Anthropics neues KI-Modell — aus einem einzigen
+  Auftrag <b>„Angebots-Blitz"</b> gebaut hat: eine Live-Demo, in der eine Sprachnotiz vom
+  Feierabend in ~30 Sekunden zum fertigen, gebrandeten Handwerker-Angebot wird — Fachsprache-Positionen,
+  centgenaue Kalkulation, eigener Briefkopf. Autonom — inklusive Tests, Deployment und zwei Qualitäts-Reviews.</p>
+  <img class="heroshot" src="shots/hero.jpg" alt="Angebots-Blitz Hero">
+  <div class="stats">
+    <div class="stat"><b>1</b><span>Prompt</span></div>
+    <div class="stat"><b>30 s</b><span>Sprachnotiz → Angebot</span></div>
+    <div class="stat"><b>1.391</b><span>Zeilen Code — von der KI</span></div>
+    <div class="stat"><b>112</b><span>Checks, je 2× grün — lokal und live</span></div>
+  </div>
+  <div class="footer"><span><img src="osai-mark.png">OsAI · osai.solutions</span><span>Making-of · Juni 2026</span></div>
+</div>
+
+<!-- SEITE 2 — Vorgehensweise -->
+<div class="page roomy">
+  <h2><span class="nr">01 · VORGEHENSWEISE</span>Zwei Sessions, ein Workflow</h2>
+  <p><b>Kurz erklärt:</b> Ein KI-Agent ist mehr als ein Chatbot — er kann Dateien lesen und schreiben,
+  Programme ausführen, im Browser testen und deployen. Claude Code bietet dafür eine
+  <b class="accent">/goal</b>-Funktion: Man gibt ein Ziel vor, und der Agent arbeitet selbstständig
+  daran, bis es erreicht ist. Entscheidend ist, <i>was</i> man ihm als Ziel mitgibt.
+  Deshalb lief dieses Projekt in zwei getrennten Sessions:</p>
+
+  <div class="phase" style="margin-top:14px"><div class="dot">A</div><div>
+    <h3>Session 1 — Planen lassen</h3>
+    <p>Die Idee in einem Satz: <i>„Angebot schreiben darf kein Feierabend-Killer sein."</i>
+    Drei parallele Recherche-Stränge lieferten die Grundlage: <b>Markt &amp; Demo-UX</b> (was Anbieter
+    wie Plancraft verkaufen — und dass niemand das Wow-Erlebnis offen zeigt) · <b>Serverless-Technik</b>
+    (wie Audio in einem einzigen KI-Aufruf zum strukturierten Angebot wird) ·
+    <b>Angebots-Fachlichkeit</b> (echte Stundensätze und m²-Preise 2026, mit Quellen aus
+    Handwerks-Statistiken — centgenau vorgerechnet). Verdichtet in zwei Dateien:</p>
+    <p style="margin-top:5px">→ <b class="accent">CONCEPT.md</b> — das eingefrorene Konzept: 3 Szenarien mit festen
+    Summen, Dokument-Anforderungen, Schutzschicht für den Live-KI-Pfad, Phasenplan mit Quality-Gates<br>
+    → <b class="accent">GOAL-PROMPT</b> — der fertige, präzise Auftrag für die Umsetzung</p>
+  </div></div>
+
+  <div class="phase"><div class="dot">B</div><div>
+    <h3>Session 2 — Bauen lassen</h3>
+    <p>In einer <b>frischen Session</b> wurde der Prompt per <b class="accent">/goal</b> übergeben. Der Agent
+    las zuerst das Konzept, dann arbeitete er <b>fünf Phasen</b> ab — MVP, Live-KI-Pfad, Polish,
+    Deployment, Selbstkritik — und testete sich nach jeder Phase selbst im echten Browser.
+    Bis zur Live-URL: <b>null menschliche Eingriffe</b>.</p>
+  </div></div>
+
+  <div class="callout"><b class="accent">Warum die Trennung?</b> Planung und Umsetzung sind verschiedene Denkmodi.
+  Die Planungs-Session darf diskutieren, recherchieren, verwerfen. Die Bau-Session bekommt ein
+  eingefrorenes, recherchiertes Konzept — und kann dadurch lange autonom laufen, ohne sich zu
+  verlaufen. Das Konzept ist der Vertrag: „Bei Widerspruch gilt das Konzept" steht wörtlich im Prompt.</div>
+  <div class="statstrip">
+    <div class="stat"><b>3</b><span>Recherche-Stränge in der Plan-Session</span></div>
+    <div class="stat"><b>2</b><span>Dateien als Vertrag — Konzept + Prompt</span></div>
+    <div class="stat"><b>5</b><span>Bau-Phasen mit Quality-Gates</span></div>
+    <div class="stat"><b>0</b><span>Eingriffe bis zur Live-URL</span></div>
+  </div>
+  <div class="footer"><span><img src="osai-mark.png">OsAI · osai.solutions</span><span>02</span></div>
+</div>
+
+<!-- SEITE 3 — Der Prompt -->
+<div class="page alt roomy">
+  <h2><span class="nr">02 · DER AUFTRAG</span>Ein einziger Prompt</h2>
+  <p>Kein Lastenheft, kein Sprint-Planning, kein Entwicklerteam. Der <b class="accent">/goal</b>-Auftrag
+  aus Session 2 (gekürzt — die Struktur ist das Entscheidende). Erste Anweisung: das recherchierte
+  Konzept aus Session 1 lesen.</p>
+  <pre class="prompt"><span class="hl">Baue „Angebots-Blitz"</span> — eine One-Pager-Demo für Handwerksbetriebe:
+Tipp auf eine Sprachnotiz-Kachel (SHK / Elektro / Maler) — und in
+~30 Sekunden entsteht ein fertiges, gebrandetes Angebot: Positionen
+in Fachsprache, Material/Lohn getrennt, Netto → 19 % USt → Brutto,
+PDF-Download. Das vollständige Konzept liegt in CONCEPT.md —
+LIES ES ZUERST KOMPLETT; bei Widerspruch gilt das Konzept.
+
+<span class="hl">KERN:</span> 3 gestagte Szenarien mit recherchierten 2026er-Preisen,
+centgenau vorgerechnet (SHK 72 €/h · Elektro 68 €/h · Maler nach m²).
+Das Dokument muss aussehen wie aus dem echten Büro: Briefkopf,
+Angebots-Nr., Bindefrist, Positionstabelle, Zahlungsziel,
+Gewährleistung. Brand-Wechsler („mit Ihrem Logo"). Dazu der
+Live-Pfad: eigenen Auftrag einsprechen → die KI macht aus dem Audio
+direkt das Angebot — mit Schutzschicht (Origin-Lock, Tages-Cap,
+bei Fehlern sauberer Rückfall auf die Beispiel-Szenarien).
+
+<span class="hl">PHASEN MIT GATES</span> (nacheinander, Gate ernst nehmen):
+1. MVP-Kern         ⚑ 3 Szenarien komplett, Summen EXAKT auf den Cent
+2. Features         ⚑ Live-Pfad + Schutz, PDF, Brand-Wechsler — 2× grün
+3. Polish           ⚑ Mobil 390 px + „würde ein Meister das ernst nehmen?"
+4. Ship             ⚑ Tests gegen die Live-URL 2× grün inkl. echtem KI-Call
+5. Excellence-Pass  ⚑ 10 Schwächen finden, Top-5 fixen, Re-Deploy
+
+<span class="hl">ERFOLGSKRITERIUM:</span> Ein Meister tippt abends auf die Bad-Kachel,
+sieht in 30 Sekunden ein Angebot, das aussieht wie aus seinem
+eigenen Büro — und denkt: Das spart mir jeden verdammten Feierabend.
+Was kostet das für meinen Betrieb?</pre>
+  <p style="margin-top:13px">Der Rest — jede Architektur-Entscheidung, jede Zeile Code, jeder Test,
+  jeder Commit — kam von der KI selbst.</p>
+  <div class="footer"><span><img src="osai-mark.png">OsAI · osai.solutions</span><span>03</span></div>
+</div>
+
+<!-- SEITE 4 — Die Phasen -->
+<div class="page">
+  <h2><span class="nr">03 · DER BAU</span>Fünf Phasen — und zwei Qualitätszyklen</h2>
+  <div class="phase"><div class="dot">1</div><div>
+    <h3>MVP-Kern — erst die Zahlen, dann die Show</h3>
+    <p>One-Pager mit drei Sprachnotiz-Kacheln: Transkript tippt sich ein, Positionen poppen nacheinander
+    ins weiße Dokument, Summen zählen live hoch. Jede Summe ist vorgerechnet — kein KI-Kopfrechnen im Dokument.</p>
+    <p class="gate">⚑ Gate bestanden (2× grün, 42 Checks): alle 3 Szenarien, Summen centgenau, Fachsprache in den Positionen</p>
+  </div></div>
+  <div class="phase"><div class="dot">2</div><div>
+    <h3>Features — der echte KI-Pfad</h3>
+    <p>„Sprich deinen eigenen Auftrag ein": Aufnahme → ein einziger Gemini-Aufruf macht aus dem Audio
+    Transkript <b>und</b> strukturiertes Angebot. Drumherum eine Schutzschicht: Origin-Lock, Tages-Limit,
+    bei jedem Fehler sauberer Rückfall auf die Beispiel-Szenarien. Dazu PDF-Export und Brand-Wechsler.</p>
+    <p class="gate">⚑ Gate (2× grün): API liefert valides Angebots-Schema, Missbrauch blockt, Fallback greift — inkl. echter KI-Calls</p>
+  </div></div>
+  <div class="phase"><div class="dot">3</div><div>
+    <h3>Polish — „würde ein Meister das ernst nehmen?"</h3>
+    <p>Mobile 390 px ohne Überlauf, Ladezeit, Lesbarkeit — und ein dokumentiertes Urteil gegen genau diese
+    Frage: Briefkopf, Bindefrist, Material/Lohn-Trennung, Gewährleistung nach BGB. Antwort: ja.</p>
+    <p class="gate">⚑ Gate (2× grün, 21 Checks): Smartphone-Breite sauber, Dokument vollständig wie ein echtes Angebot</p>
+  </div></div>
+  <div class="phase"><div class="dot">4</div><div>
+    <h3>Ship — live in der echten Welt</h3>
+    <p>GitHub-Repo, Vercel-Hosting, eigene Domain — komplette Deploy-Kette vom Agenten eingerichtet.</p>
+    <p class="gate">⚑ Gate: alle Suiten 2× grün gegen angebots-blitz.demo.osai.solutions — inkl. echtem KI-Call über die Live-API</p>
+  </div></div>
+  <div class="phase"><div class="dot">5</div><div>
+    <h3>Excellence-Pass — der Agent kritisiert sich selbst</h3>
+    <p>Auftrag im Prompt: 10 eigene Schwächen finden, die wichtigsten fixen. 6 Fixes — darunter ein
+    <b>echter Sicherheitsfund</b>: Der KI-Schlüssel wanderte aus der URL (wo er in Server-Logs landen kann)
+    in einen geschützten Header. Dazu Skip-Button, Szenario-Tabs, Mobile-Auto-Scroll.</p>
+    <p class="gate">⚑ Gate: 10 Findings dokumentiert, 6 gefixt, Re-Deploy, Suiten erneut 2× grün</p>
+  </div></div>
+
+  <div class="callout" style="margin-top:4px"><b class="accent">Danach: der externe Blick.</b>
+  Auf den Selbst-Review folgte ein unabhängiger <b>Fresh-Eyes-Review</b> ohne Bau-Kontext (Urteil: 7/10,
+  14 Findings — vom fehlenden Impressum bis zu Fachlichkeits-Details, die nur die Zielgruppe sieht:
+  eine unplausible Wandfläche, eine doppelt berechnete Montage, eine falsch zitierte VDE-Norm).
+  Er fing sogar eine <b>falsch zugeschriebene Statistik-Quelle</b> auf der Startseite. Alle 14 wurden
+  gefixt und live nachgetestet. Erst dann: final.</div>
+  <div class="callout"><b class="accent">Der Moment, der hängen bleibt:</b> Beim Test mit absichtlichem
+  Müll-Audio <i>erfand</i> die Live-KI einen kompletten Kunden — „Meister Röhrich aus Kiel", samt Auftrag.
+  Der externe Review fing es, der Fix sitzt doppelt: Der Server weist zu kurzes Audio ab, und die KI hat
+  jetzt die ausdrückliche Anweisung, bei Unverständlichem ehrlich „unverständlich" zu antworten — statt
+  zu raten. Genau dafür sind Reviews da.</div>
+  <div class="statstrip" style="margin-top:10px">
+    <div class="stat"><b>24</b><span>Findings über 2 Qualitätszyklen</span></div>
+    <div class="stat"><b>20</b><span>davon gefixt — Rest dokumentiert</span></div>
+    <div class="stat"><b>3</b><span>Testsuiten (46+39+27), je 2× grün — lokal und live</span></div>
+    <div class="stat"><b>1</b><span>Sicherheitsfund — gefixt vor Launch</span></div>
+  </div>
+  <div class="footer"><span><img src="osai-mark.png">OsAI · osai.solutions</span><span>04</span></div>
+</div>
+
+<!-- SEITE 5 — Skills & Pipeline -->
+<div class="page alt">
+  <h2><span class="nr">04 · WERKZEUGE</span>Skills &amp; die Pipeline</h2>
+  <p>Der Agent griff auf vorbereitete <b>Skills</b> zurück — wiederverwendbare Fähigkeiten mit klaren
+  Regeln (welches Werkzeug, welche Kosten, welche Qualitätskriterien). Bemerkenswert: Das übliche
+  Vorab-Interview entfiel — der Lauf war komplett autonom. Diese Werkzeuge kamen zum Einsatz:</p>
+  <table class="skills">
+    <tr><th>Skill / Werkzeug</th><th>Aufgabe im Projekt</th></tr>
+    <tr><td>Recherche-Subagenten</td><td>3 Stränge parallel in der Plan-Session: Demo-UX &amp; Markt (Plancraft &amp; Co.) · Serverless-Technik · Angebots-Fachlichkeit mit Quellen aus Handwerks-Statistiken (Destatis, Branchen-Preisspiegel)</td></tr>
+    <tr><td>Kie-TTS (ElevenLabs)</td><td>3 nachgestellte Sprachnotizen für die Kacheln — deutsche Männerstimme, klingt wie eine WhatsApp vom Feierabend; transiente Fehler sauber retried</td></tr>
+    <tr><td>Gemini Structured Output</td><td>Der Kern-Trick: Audio + ein Prompt + festes Antwort-Schema → Transkript UND fertiges Angebots-JSON in einem einzigen Aufruf — kein separater Spracherkennungs-Schritt</td></tr>
+    <tr><td>webapp-testing (Playwright)</td><td>Selbsttests im echten Browser: 3 Testsuiten mit 112 Checks, je 2× grün — lokal und noch einmal gegen die Live-URL, inkl. echter KI-Calls</td></tr>
+    <tr><td>Fresh-Eyes-Review</td><td>Unabhängiger zweiter Blick auf das fertige Produkt: 14 Findings, darunter der „Meister Röhrich"-Fund und die falsch zugeschriebene Statistik</td></tr>
+    <tr><td>GitHub + Vercel</td><td>Repo, Hosting, eigene Domain, Schlüssel-Verwaltung — komplette Deploy-Kette vom Agenten eingerichtet</td></tr>
+  </table>
+
+  <p style="margin-top:4px"><b>Die Pipeline</b> — vom eingefrorenen Konzept bis zur geprüften Live-Demo.
+  Jede Station übergibt erst, wenn ihr Gate grün ist:</p>
+  <div class="flow">
+    <div class="node"><span class="ico">①</span><b>Plan</b><span>3 Recherche-Stränge → eingefrorenes Konzept + Prompt — die Preise sind belegt, bevor gebaut wird</span></div>
+    <div class="arr">→</div>
+    <div class="node hot"><span class="ico">②</span><b>Build</b><span>5 Phasen autonom, jedes Gate 2× grün — 1.391 Zeilen Code, Live-KI-Pfad mit Schutzschicht</span></div>
+    <div class="arr">→</div>
+    <div class="node"><span class="ico">③</span><b>Review</b><span>Selbstkritik (10 Findings) + externer Fresh-Eyes-Review (14 Findings, Urteil 7/10)</span></div>
+    <div class="arr">→</div>
+    <div class="node"><span class="ico">④</span><b>Fix</b><span>20 Fixes in atomaren Schritten — jeder einzeln nachgetestet, lokal und live</span></div>
+    <div class="arr">→</div>
+    <div class="node"><span class="ico">⑤</span><b>Live</b><span>angebots-blitz.demo.osai.solutions — ohne Login, ohne Anmeldung sofort erlebbar</span></div>
+  </div>
+  <p class="cap" style="text-align:center;margin-top:6px">Produktionskosten der KI-Bausteine: 3 TTS-Sprachclips, 0 AI-Bilder, KI-Angebots-Pfad im Gemini-Free-Tier.</p>
+
+  <div class="callout" style="margin-top:12px"><b class="accent">Warum das mehr ist als eine hübsche Animation:</b>
+  Die drei Beispiel-Szenarien sind vorgerechnet — aber der „Sprich deinen Auftrag ein"-Pfad ist <b>echt</b>:
+  Ihre Stimme geht durch dieselbe KI-Strecke, die auch im Betriebs-Alltag laufen würde. Genau diese Mechanik —
+  Sprache rein, strukturiertes Dokument raus — funktioniert ebenso für Aufmaße, Rechnungen und Berichte.</div>
+  <div class="footer"><span><img src="osai-mark.png">OsAI · osai.solutions</span><span>05</span></div>
+</div>
+
+<!-- SEITE 6 — Das Ergebnis -->
+<div class="page">
+  <h2><span class="nr">05 · DAS ERGEBNIS</span>Ein Angebot wie aus dem eigenen Büro</h2>
+  <div style="display:grid;grid-template-columns:1.32fr 1fr;gap:11px;align-items:start">
+    <div>
+      <img class="shot" src="shots/hero.jpg"><div class="cap">Die Live-Demo — Claim, belegte Branchen-Zahlen und drei antippbare Sprachnotiz-Kacheln (SHK · Elektro · Maler), jede mit echter TTS-Stimme</div>
+      <img class="shot" src="shots/brand-custom.jpg" style="margin-top:11px"><div class="cap">Der Brand-Wechsler — ein Tipp auf „+ Dein Betrieb?", Firmenname eingeben, und der Briefkopf trägt sofort Monogramm und Farbe des eigenen Betriebs</div>
+      <img class="shot" src="shots/kalk.jpg" style="margin-top:11px"><div class="cap">„So kalkuliert die KI" — Stundenverrechnungssatz statt Bauchgefühl, 15 % Materialaufschlag, mit offenen Quellen</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1.18fr 0.82fr;gap:9px;align-items:start">
+      <div><img class="shot" src="shots/doc-shk.jpg"><div class="cap">Das fertige SHK-Angebot — Briefkopf, Bindefrist, Fachsprache-Positionen, Material/Lohn getrennt, Netto → USt → Brutto: 1.236,41 €</div></div>
+      <div><img class="shot" src="shots/mobile-390.jpg"><div class="cap">Dasselbe Dokument auf dem Handy (390 px) — vollständig, ohne Überlauf</div></div>
+    </div>
+  </div>
+  <div class="footer"><span><img src="osai-mark.png">OsAI · osai.solutions</span><span>06</span></div>
+</div>
+
+<!-- SEITE 7 — Business + CTA -->
+<div class="page alt">
+  <h2><span class="nr">06 · UND JETZT DU</span>Was heißt das für deinen Betrieb?</h2>
+  <p>Die Demo zeigt eine fiktive „Muster Haustechnik GmbH" — das Prinzip ist real: <b>Sprache rein,
+  fertiges Dokument raus.</b> Vier Anwendungsfälle, die sich direkt aus dieser Demo ableiten:</p>
+  <ul class="biglist" style="margin:14px 0 4px">
+    <li><b class="accent">Das Angebot nach Feierabend — per Sprachnotiz</b> — Auftrag besichtigt, auf dem
+    Heimweg eingesprochen, am Abend steht das fertige Angebot mit deinem Briefkopf und deinen
+    Stundensätzen zur Freigabe bereit. Statt zwei Stunden am Schreibtisch.</li>
+    <li><b class="accent">Die Aufmaß-Notiz vom Beifahrersitz</b> — Maße, Material, Besonderheiten direkt
+    auf der Baustelle einsprechen. Die KI macht daraus die strukturierte Position — nichts geht auf dem
+    Zettel verloren.</li>
+    <li><b class="accent">Der Azubi nimmt Anfragen auf, der Meister prüft nur</b> — Kundenanruf oder
+    Vor-Ort-Termin wird als Sprachnotiz festgehalten, das System baut den Angebots-Entwurf. Der Meister
+    kontrolliert und gibt frei, statt selbst zu tippen.</li>
+    <li><b class="accent">Dieselbe Mechanik für Rechnungen und Aufmaße</b> — was hier ein Angebot ist,
+    funktioniert genauso für Rechnungs-Entwürfe, Aufmaß-Protokolle und Regieberichte: Sprache rein,
+    sauberes Dokument raus.</li>
+  </ul>
+  <div class="callout"><b class="accent">Zur Einordnung:</b> Handwerker-Software mit Sprach-zu-Angebot-Funktion
+  (z. B. Plancraft &amp; Co.) kostet am Markt typischerweise <b>60–200 € pro Monat</b> — und das Erlebnis
+  versteckt sich hinter Login und Onboarding. Diese Demo zeigt es <b>ohne Account, direkt im Browser</b>.
+  Was eine maßgeschneiderte Strecke mit deinem Briefkopf und deinen Preisen kostet, rechnen wir im
+  Erstgespräch gemeinsam durch.</div>
+  <div class="cta" style="margin-top:auto;margin-bottom:14mm">
+    <p class="head">Tipp dich durch die Demo —<br><em>und dann reden wir über deinen Betrieb.</em></p>
+    <p class="link">angebots-blitz.demo.osai.solutions</p>
+    <p style="margin-bottom:5px"><b>30-Minuten-Erstgespräch</b> — unverbindlich, direkt buchbar:</p>
+    <p class="link" style="font-size:12.5px">cal.com/osai-solutions/erstgespraech</p>
+    <p style="margin-top:16px"><img src="osai-mark.png" style="height:40px;vertical-align:middle;margin-right:13px"><span style="font-weight:900;font-size:25px;vertical-align:middle;letter-spacing:-0.5px">OsAI</span></p>
+    <p class="dimt" style="font-size:11px;margin-top:6px">osai.solutions · Osman Öztopcu</p>
+  </div>
+  <div class="footer"><span><img src="osai-mark.png">OsAI · osai.solutions</span><span>07</span></div>
+</div>
+
+</body>
+</html>

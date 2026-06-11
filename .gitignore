@@ -6,6 +6,8 @@ node_modules/
 .DS_Store
 __pycache__/
 test-results/
-making-of/
+# making-of: Quelle + JPEG-Shots committen, PNG-Master + QA-Renders nicht
+making-of/shots/*.png
+making-of/qa/
 video/
 .vercel
