@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angebots-Blitz — Sprachnotiz rein, fertiges Angebot raus. In 30 Sekunden.</title>
+  <meta name="description" content="Handwerker-Demo: Eine Sprachnotiz wird in ~30 Sekunden zu einem fertigen, professionellen Angebot — Fachsprache-Positionen, Material/Lohn getrennt, Netto/USt/Brutto, PDF. Powered by OsAI.">
+  <meta property="og:title" content="Angebots-Blitz — Sprachnotiz → fertiges Angebot in 30 Sekunden">
+  <meta property="og:description" content="76 % der Handwerksbetriebe nennen Bürokratie als Top-Last. Diese Demo zeigt: Angebot schreiben muss kein Feierabend-Killer sein.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://angebots-blitz.demo.osai.solutions/">
+  <meta property="og:image" content="https://angebots-blitz.demo.osai.solutions/assets/img/og.png">
+  <meta property="og:locale" content="de_DE">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2316181d'/><path d='M58 12 26 56h18l-6 32 36-48H54l4-28z' fill='%23ffc814'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ===== Topbar ===== -->
+  <header class="topbar">
+    <a class="topbar-brand" href="#top">
+      <span class="blitz-mark" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><path d="M58 12 26 56h18l-6 32 36-48H54l4-28z" fill="currentColor"/></svg>
+      </span>
+      <span class="topbar-word">ANGEBOTS<em>BLITZ</em></span>
+    </a>
+    <a class="topbar-cta" href="https://osai.solutions?utm_source=angebots-blitz" target="_blank" rel="noopener">Für meinen Betrieb&nbsp;→</a>
+  </header>
+
+  <main id="top">
+
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="hero-kicker reveal">Demo für Handwerksbetriebe</p>
+        <h1 class="hero-claim reveal">Sprachnotiz rein.<br><span class="accent">Fertiges Angebot</span> raus.<br>In 30&nbsp;Sekunden.</h1>
+        <p class="hero-sub reveal">Du sprichst den Auftrag aufs Handy — wie eine WhatsApp an deinen Meister. Die KI macht daraus ein Angebot mit Fachsprache-Positionen, sauberer Kalkulation und deinem Briefkopf. <strong>Tipp unten auf eine echte Beispiel-Notiz.</strong></p>
+        <div class="hero-stats reveal">
+          <div class="stat"><span class="stat-num" data-count="76">0</span><span class="stat-unit">%</span><span class="stat-label">der Betriebe nennen Bürokratie als Top-Belastung<span class="stat-src">Bitkom 2025</span></span></div>
+          <div class="stat"><span class="stat-num" data-count="62">0</span><span class="stat-unit">%</span><span class="stat-label">lehnen Aufträge ab — keine Zeit fürs Büro<span class="stat-src">ZDH 2026</span></span></div>
+          <div class="stat"><span class="stat-num" data-count="30">0</span><span class="stat-unit">s</span><span class="stat-label">von der Sprachnotiz zum fertigen Angebot<span class="stat-src">diese Demo</span></span></div>
+        </div>
+      </div>
+      <div class="hero-grain" aria-hidden="true"></div>
+    </section>
+
+    <!-- ===== Kacheln ===== -->
+    <section class="tiles-section" id="kacheln">
+      <h2 class="section-title reveal">Drei echte Aufträge.<br class="mobile-br"> Tipp einen an.</h2>
+      <p class="section-sub reveal">Original-Sprachnotizen aus dem Feierabend — so unaufgeräumt, wie man eben spricht.</p>
+      <div class="tiles">
+        <button class="tile reveal" data-scenario="shk" data-testid="tile-shk">
+          <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4.5 4.5 0 0 0-6.2 5.5L3 17.3V21h3.7l5.5-5.5a4.5 4.5 0 0 0 5.5-6.2l-3 3-2.5-.6-.6-2.5 3.1-2.9z"/></svg></span>
+          <span class="tile-trade">SHK · Bad</span>
+          <span class="tile-title">„Waschtisch raus, neuer 60er rein…“</span>
+          <span class="tile-meta"><span class="tile-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="tile-dur">0:24 · Sprachnotiz</span></span>
+        </button>
+        <button class="tile reveal" data-scenario="elektro" data-testid="tile-elektro">
+          <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></span>
+          <span class="tile-trade">Elektro · Wohnzimmer</span>
+          <span class="tile-title">„Vier Steckdosen UP, zwei LED-Auslässe…“</span>
+          <span class="tile-meta"><span class="tile-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="tile-dur">0:21 · Sprachnotiz</span></span>
+        </button>
+        <button class="tile reveal" data-scenario="maler" data-testid="tile-maler">
+          <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 3H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z"/><path d="M20 6h2v5h-9v3"/><rect x="11" y="14" width="4" height="7" rx="1"/></svg></span>
+          <span class="tile-trade">Maler · 25 m²</span>
+          <span class="tile-title">„Wohnzimmer, Wände und Decke zweimal weiß…“</span>
+          <span class="tile-meta"><span class="tile-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="tile-dur">0:19 · Sprachnotiz</span></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== Demo-Stage ===== -->
+    <section class="stage-section" id="demo" hidden>
+      <div class="stage">
+        <!-- Sprachnotiz / Transkript -->
+        <div class="voice-panel" data-testid="voice-panel">
+          <div class="voice-head">
+            <span class="voice-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg></span>
+            <div class="voice-title-wrap">
+              <span class="voice-title" id="voice-title">Sprachnotiz</span>
+              <span class="voice-state" id="voice-state">wird transkribiert …</span>
+            </div>
+            <span class="voice-wave" id="voice-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          </div>
+          <p class="voice-transcript" id="voice-transcript" data-testid="transcript" aria-live="polite"></p>
+          <div class="ki-steps" id="ki-steps" aria-live="polite"></div>
+        </div>
+
+        <!-- Dokument-Viewer -->
+        <div class="doc-wrap">
+          <div class="doc-toolbar" id="doc-toolbar">
+            <div class="brand-switch" id="brand-switch" data-testid="brand-switch">
+              <span class="brand-switch-label">Briefkopf:</span>
+              <div class="brand-chips" id="brand-chips"></div>
+            </div>
+            <button class="pdf-btn" id="pdf-btn" data-testid="pdf-btn" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+              PDF herunterladen
+            </button>
+          </div>
+
+          <article class="doc" id="doc" data-testid="doc">
+            <header class="doc-head">
+              <div class="doc-brand">
+                <span class="doc-logo" id="doc-logo">MH</span>
+                <div class="doc-brand-text">
+                  <strong id="doc-firm-name">Muster Haustechnik GmbH</strong>
+                  <span id="doc-firm-tagline">Sanitär · Heizung · Klima</span>
+                </div>
+              </div>
+              <div class="doc-firm-meta" id="doc-firm-meta">
+                Werkstattring 14 · 71332 Waiblingen<br>
+                Tel. 07151 / 98 76 54<br>
+                info@muster-haustechnik.de
+              </div>
+            </header>
+
+            <div class="doc-address-row">
+              <div class="doc-address">
+                <span class="doc-address-label" id="doc-sender-line">Muster Haustechnik GmbH · Werkstattring 14 · 71332 Waiblingen</span>
+                <span id="doc-kunde">—</span>
+              </div>
+              <table class="doc-meta-table">
+                <tr><td>Angebot Nr.</td><td id="doc-nr" data-testid="doc-nr">—</td></tr>
+                <tr><td>Datum</td><td id="doc-datum">—</td></tr>
+                <tr><td>Gültig bis</td><td id="doc-bindefrist">—</td></tr>
+              </table>
+            </div>
+
+            <h2 class="doc-title">Angebot — <span id="doc-projekt">…</span></h2>
+            <p class="doc-intro">Sehr geehrte Damen und Herren,<br>vielen Dank für Ihre Anfrage. Gerne bieten wir Ihnen die nachfolgenden Leistungen an:</p>
+
+            <table class="doc-table" data-testid="doc-table">
+              <thead>
+                <tr><th>Pos.</th><th>Beschreibung</th><th class="num">Menge</th><th>Einheit</th><th class="num">EP&nbsp;€</th><th class="num">GP&nbsp;€</th></tr>
+              </thead>
+              <tbody id="doc-positions"></tbody>
+            </table>
+
+            <div class="doc-sums">
+              <div class="doc-split" id="doc-split"></div>
+              <table class="doc-sums-table">
+                <tr><td>Summe netto</td><td class="num" id="sum-netto" data-testid="sum-netto">0,00&nbsp;€</td></tr>
+                <tr><td>zzgl. 19&nbsp;% USt.</td><td class="num" id="sum-ust" data-testid="sum-ust">0,00&nbsp;€</td></tr>
+                <tr class="doc-total"><td>Gesamtbetrag</td><td class="num" id="sum-brutto" data-testid="sum-brutto">0,00&nbsp;€</td></tr>
+              </table>
+            </div>
+
+            <div class="doc-terms" id="doc-terms">
+              <p><strong>Bindefrist:</strong> Dieses Angebot ist 4 Wochen ab Angebotsdatum gültig.</p>
+              <p><strong>Zahlungsbedingungen:</strong> Zahlbar innerhalb von 14 Tagen nach Rechnungserhalt ohne Abzug.</p>
+              <p><strong>Gewährleistung:</strong> Es gelten die gesetzlichen Gewährleistungsfristen nach BGB. Ausführung nach den anerkannten Regeln der Technik.</p>
+            </div>
+            <div class="doc-sign">
+              <p>Mit freundlichen Grüßen</p>
+              <p class="doc-sign-name" id="doc-sign-name">Muster Haustechnik GmbH</p>
+              <p class="doc-sign-meta" id="doc-sign-meta">USt-IdNr. DE 123 456 789 · Handwerksrolle: fiktiver Demo-Eintrag</p>
+            </div>
+            <div class="doc-demo-stamp" aria-hidden="true">DEMO</div>
+          </article>
+
+          <!-- So kalkuliert die KI -->
+          <details class="calc-details reveal" id="calc-details" data-testid="calc-details">
+            <summary>So kalkuliert die KI <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <div class="calc-body">
+              <p><strong>Stundenverrechnungssatz statt Bauchgefühl.</strong> Der Satz (hier z.&nbsp;B. 72&nbsp;€/h SHK, 68&nbsp;€/h Elektro) deckt nicht nur den Lohn, sondern auch Lohnnebenkosten, Fahrzeuge, Werkstatt, Verwaltung und Gewinn — deshalb liegt er deutlich über dem reinen Monteurlohn.</p>
+              <p><strong>Material mit 15&nbsp;% Aufschlag.</strong> Auf Einkaufspreise kalkuliert die KI einen branchenüblichen Materialaufschlag von 15&nbsp;% ein — er deckt Beschaffung, Lagerung und Gewährleistungsrisiko.</p>
+              <p><strong>Material und Lohn getrennt</strong>, Anfahrt als eigene Position, Pauschalen nur wo üblich (Kleinmaterial, E-Check). So entsteht ein Angebot, das ein Meister unterschreiben würde.</p>
+              <p class="calc-src">Preisniveau-Quellen: handwerk.cloud Stundensatz-Studie 2026 · MyHammer Preisradar. Alle Beträge dieser Demo sind realistische Beispielwerte, keine verbindliche Kalkulation.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Live-Pfad ===== -->
+    <section class="live-section reveal" id="live">
+      <div class="live-inner">
+        <h2 class="section-title">Oder sprich <span class="accent">deinen eigenen</span> Auftrag ein.</h2>
+        <p class="section-sub">Max. 60 Sekunden — einfach so, wie du es deinem Büro sagen würdest.</p>
+        <div class="live-box" id="live-box">
+          <button class="rec-btn" id="rec-btn" data-testid="rec-btn" type="button">
+            <span class="rec-dot" aria-hidden="true"></span>
+            <span class="rec-label" id="rec-label">Aufnahme starten</span>
+          </button>
+          <div class="rec-timer" id="rec-timer" hidden>0:00</div>
+          <p class="live-status" id="live-status" data-testid="live-status"></p>
+          <p class="dsgvo-line">🔒 Deine Aufnahme wird nur zur Angebotserstellung verarbeitet und nicht gespeichert.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta-section reveal" id="cta">
+      <div class="cta-inner">
+        <p class="cta-kicker">Das war eine Demo. Jetzt stell dir das in deinem Betrieb vor:</p>
+        <h2 class="cta-claim">Mit <span class="accent">deinem Briefkopf</span>, deinen Preisen, deinen Texten — direkt aus deiner Sprachnotiz.</h2>
+        <p class="cta-compare">Branchensoftware verkauft das für <strong>60–200&nbsp;€ im Monat</strong> — hinter Login und Onboarding. OsAI baut es dir passgenau in deinen Betrieb, ohne Abo-Korsett.</p>
+        <a class="cta-btn" href="https://osai.solutions?utm_source=angebots-blitz" target="_blank" rel="noopener" data-testid="cta-btn">Was kostet das für meinen Betrieb?&nbsp;→</a>
+        <p class="cta-sub">15 Minuten Erstgespräch · unverbindlich · osai.solutions</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-note">Demo-Projekt — alle Firmen, Kunden und Preise sind fiktive, realistische Beispielwerte.</span>
+      <a class="footer-brand" href="https://osai.solutions?utm_source=angebots-blitz" target="_blank" rel="noopener">
+        powered by <img src="assets/img/osai-logo.png" alt="OsAI" width="22" height="22"> <strong>OsAI</strong>
+      </a>
+    </div>
+  </footer>
+
+  <script src="assets/js/scenarios.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

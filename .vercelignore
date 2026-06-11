@@ -1,0 +1,8 @@
+making-of/
+video/
+tests/
+fixtures/
+BUILD-LOG.md
+LESSONS.md
+dev-server.mjs
+.DS_Store
