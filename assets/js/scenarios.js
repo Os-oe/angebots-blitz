@@ -35,6 +35,7 @@ window.SCENARIOS = {
     angebotsNr: "AB-2026-1043",
     kunde: "Hr. Demir, Lindenweg 4, 70372 Stuttgart",
     stundensatz: 68,
+    kalkStep: "Einheitspreise je Auslass kalkuliert",
     transcript:
       "Kurze Notiz zum Auftrag Demir, Lindenweg: Im Wohnzimmer sollen vier Steckdosen unter Putz nachgerüstet werden, einmal die Wand hoch. Dazu zwei Deckenauslässe für LED-Einbauleuchten setzen. Material haben wir auf Lager, das rechne ich pauschal. Am Ende E-Check mit Messprotokoll, ist Pflicht. Anfahrt ganz normal. Mach mir das Angebot fertig.",
     positionen: [

@@ -76,6 +76,9 @@ def run(page):
         has_material = sid in ("shk", "elektro")
         check(f"{sid}: Material-Schritt {'da' if has_material else 'weg (kein Material)'}",
               ("Material" in ki) == has_material, ki)
+        if sid == "elektro":  # Positionen sind je Auslass kalkuliert, kein Stundensatz-Schritt
+            check("elektro: KI-Schritt „Einheitspreise je Auslass“ statt Stundensatz",
+                  "Einheitspreise je Auslass" in ki and "Stundenverrechnungssatz" not in ki, ki)
 
     # --- Dokument-Pflichtteile (CONCEPT §2.3)
     terms = page.text_content("#doc-terms")

@@ -198,7 +198,7 @@
     var hasMaterial = quote.positionen.some(function (p) { return p.typ === "material"; });
     var steps = [
       "Gewerk erkannt: " + quote.gewerk,
-      quote.stundensatz ? "Stundenverrechnungssatz: " + quote.stundensatz + " €/h" : "Kalkulation über m²-Sätze",
+      quote.kalkStep || (quote.stundensatz ? "Stundenverrechnungssatz: " + quote.stundensatz + " €/h" : "Kalkulation über m²-Sätze"),
       hasMaterial ? "Material +15 % Aufschlag einkalkuliert" : null,
       "Positionen in Fachsprache formuliert"
     ].filter(Boolean);
