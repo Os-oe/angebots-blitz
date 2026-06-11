@@ -105,9 +105,10 @@
     return { netto: netto, ust: ust, brutto: round2(netto + ust), material: mat, lohn: lohn, pauschale: psch };
   }
 
+  var dateFmt = { day: "2-digit", month: "2-digit", year: "numeric" };
   function bindefristDatum(d) {
     var f = new Date(d.getTime() + 28 * 864e5);
-    return f.toLocaleDateString("de-DE");
+    return f.toLocaleDateString("de-DE", dateFmt);
   }
 
   async function countUp(el, target, dur, token) {
@@ -159,7 +160,7 @@
     // Kopf des Dokuments
     var heute = new Date();
     $("#doc-nr").textContent = quote.angebotsNr;
-    $("#doc-datum").textContent = heute.toLocaleDateString("de-DE");
+    $("#doc-datum").textContent = heute.toLocaleDateString("de-DE", dateFmt);
     $("#doc-bindefrist").textContent = bindefristDatum(heute) + " (4 Wochen)";
     $("#doc-kunde").textContent = quote.kunde || "Ihr Kunde";
     $("#doc-projekt").textContent = quote.title;
@@ -221,7 +222,7 @@
     if (sums.material) splitParts.push("Material: <b>" + eur(sums.material) + "</b>");
     if (sums.lohn) splitParts.push("Lohn: <b>" + eur(sums.lohn) + "</b>");
     if (sums.pauschale) splitParts.push("Pauschalen/Anfahrt: <b>" + eur(sums.pauschale) + "</b>");
-    $("#doc-split").innerHTML = splitParts.join("<span aria-hidden='true'> · </span>");
+    $("#doc-split").innerHTML = splitParts.map(function (s) { return '<span class="split-item">' + s + "</span>"; }).join("");
     await countUp($("#sum-netto"), sums.netto, 900, token);
     await countUp($("#sum-ust"), sums.ust, 700, token);
     await countUp($("#sum-brutto"), sums.brutto, 1100, token);
