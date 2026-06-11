@@ -46,6 +46,14 @@ def api_tests():
     code, d = post(BASE + "/api/quote", {"mime": "audio/webm"}, origin=BASE)
     check("Kein Audio → 400", code == 400, str(code))
 
+    # 2b) Müll-Audio: niemals erfundene Kundendaten ausliefern
+    garbage = {"audio": base64.b64encode(b"xx").decode(), "mime": "audio/webm", "duration": 10}
+    code, d = post(BASE + "/api/quote", garbage, origin=BASE)
+    check("Müll-Audio (2 Byte) → 422 + fallback, kein quote", code == 422 and d.get("fallback") and "quote" not in d, f"{code} {d}")
+    check("Müll-Audio: ehrliche Fehlermeldung", "verständlicher Auftrag" in d.get("error", ""), str(d))
+    code, d = post(BASE + "/api/quote", {"audio": fixture, "mime": "audio/webm", "duration": 1}, origin=BASE)
+    check("Dauer < 2 s → 422 + fallback", code == 422 and d.get("fallback"), f"{code} {d}")
+
     # 3) Tages-Cap (eigener Server mit AB_DAILY_CAP=0) → 429 + fallback
     env = dict(os.environ, AB_DAILY_CAP="0", GOOGLE_AI_STUDIO="dummy")
     proc = subprocess.Popen(["node", "dev-server.mjs", str(CAP_PORT)], cwd=ROOT, env=env,

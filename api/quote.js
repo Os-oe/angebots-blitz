@@ -23,7 +23,9 @@ const VERCEL_RE = /^angebots-blitz[a-z0-9-]*\.vercel\.app$/;
 
 const MODELS = ["gemini-3.5-flash", "gemini-2.5-flash"]; // Fallback-Kette
 const MAX_BYTES = 2 * 1024 * 1024;
+const MIN_BYTES = 10 * 1024; // darunter ist keine verwertbare Sprachnotiz drin
 const MAX_SECONDS = 60;
+const MIN_SECONDS = 2;
 const DAILY_CAP = Number(process.env.AB_DAILY_CAP || 40); // globaler Tages-Cap pro Instanz
 const IP_CAP = Number(process.env.AB_IP_CAP || 5);        // pro IP und Tag
 
@@ -43,13 +45,15 @@ Regeln:
 - "einheit" aus: Stk., Std., m², m, psch.
 - "typ" aus: material, lohn, pauschale.
 - "titel": kurzer Projekttitel (z. B. "Waschtisch-Austausch im Bad").
-- "kunde_kontext": Kunde/Ort falls genannt, sonst leer.
+- "kunde_kontext": Kunde/Ort falls genannt, sonst leer. NIEMALS einen Kunden oder Ort erfinden.
 - Wenn die Aufnahme KEIN Handwerksauftrag ist, setze "gewerk" auf "unklar" und positionen auf [].
+- Wenn das Audio unverständlich oder leer ist oder keinen Handwerksauftrag beschreibt, antworte mit {"error": "unverstaendlich"} — setze dazu "error" auf "unverstaendlich", "gewerk" auf "unklar" und "positionen" auf []. Erfinde in diesem Fall NICHTS.
 Antworte NUR mit dem JSON.`;
 
 const RESPONSE_SCHEMA = {
   type: "OBJECT",
   properties: {
+    error: { type: "STRING" },
     transkript: { type: "STRING" },
     gewerk: { type: "STRING" },
     titel: { type: "STRING" },
@@ -129,6 +133,7 @@ async function callGemini(apiKey, model, mime, base64Audio) {
 
 function validQuote(q) {
   if (!q || typeof q !== "object") return false;
+  if (q.error) return false; // Gemini meldet „unverstaendlich" → ehrlicher Fallback statt Halluzination
   if (!Array.isArray(q.positionen)) return false;
   if (q.gewerk === "unklar" || q.positionen.length === 0) return false;
   return q.positionen.every(p =>
@@ -167,8 +172,14 @@ module.exports = async function handler(req, res) {
   if (bytes > MAX_BYTES) {
     return res.status(413).json({ ok: false, fallback: true, error: "Aufnahme zu groß (max. 2 MB)" });
   }
+  if (bytes < MIN_BYTES) {
+    return res.status(422).json({ ok: false, fallback: true, error: "Da war kein verständlicher Auftrag zu hören — sprich bitte ein paar Sätze" });
+  }
   if (duration > MAX_SECONDS + 3) {
     return res.status(413).json({ ok: false, fallback: true, error: "Aufnahme zu lang (max. 60 s)" });
+  }
+  if (duration > 0 && duration < MIN_SECONDS) {
+    return res.status(422).json({ ok: false, fallback: true, error: "Aufnahme zu kurz — sprich bitte ein paar Sätze" });
   }
   if (!/^audio\/(webm|ogg|mp4|mpeg|mp3|wav|aac|x-m4a)/.test(mime)) {
     return res.status(415).json({ ok: false, fallback: true, error: "Audioformat nicht unterstützt" });
