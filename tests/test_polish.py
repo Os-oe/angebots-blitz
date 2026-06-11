@@ -61,6 +61,20 @@ def main():
             "[...document.querySelectorAll('button')].every(b => (b.textContent||'').trim().length > 0)"))
         check("Bilder haben alt", d.evaluate(
             "[...document.querySelectorAll('img')].every(i => i.hasAttribute('alt'))"))
+
+        # --- Impressum + Datenschutz (§5 DDG / DSGVO)
+        check("Footer verlinkt Impressum + Datenschutz",
+              d.locator('.footer a[href="impressum.html"]').count() == 1 and
+              d.locator('.footer a[href="datenschutz.html"]').count() == 1)
+        d.goto(BASE + "/impressum.html", wait_until="networkidle")
+        imp = d.text_content("main")
+        check("Impressum: § 5 DDG + Anbieter", "§ 5 DDG" in imp and "Öztopcu" in imp and "Fellbach" in imp)
+        check("Impressum: USt-IdNr", "DE462559965" in imp)
+        d.goto(BASE + "/datenschutz.html", wait_until="networkidle")
+        ds = d.text_content("main")
+        check("Datenschutz: Mikrofon-Verarbeitung erklärt", "Mikrofon" in ds and "Angebots" in ds)
+        check("Datenschutz: keine Speicherung + Gemini als Auftragsverarbeiter",
+              "Keine Speicherung" in ds and "Gemini" in ds and "Auftragsverarbeit" in ds)
         b.close()
 
     failed = [c for c in CHECKS if not c[1]]

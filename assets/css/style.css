@@ -362,6 +362,18 @@ button { font-family: inherit; cursor: pointer; }
 .footer-brand { display: inline-flex; align-items: center; gap: 7px; color: var(--ink-dim); text-decoration: none; font-size: 13px; }
 .footer-brand img { border-radius: 5px; }
 .footer-brand strong { color: var(--ink); }
+.footer-legal { color: var(--ink-dim); text-decoration: none; border-bottom: 1px solid var(--line); }
+.footer-legal:hover { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* ---------- Legal pages (Impressum / Datenschutz) ---------- */
+.legal-page { max-width: 720px; margin: 0 auto; padding: clamp(40px, 7vw, 80px) clamp(20px, 5vw, 48px) clamp(48px, 8vw, 90px); }
+.legal-page h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 5vw, 46px); letter-spacing: -.015em; }
+.legal-lead { margin-top: 14px; color: var(--ink-dim); font-size: 15.5px; }
+.legal-page h2 { font-family: var(--font-display); font-weight: 700; font-size: 18px; margin-top: 34px; }
+.legal-page p, .legal-page ul { margin-top: 10px; color: var(--ink-dim); font-size: 14.5px; line-height: 1.7; }
+.legal-page ul { padding-left: 20px; display: grid; gap: 6px; }
+.legal-page strong { color: var(--ink); }
+.legal-page a { color: var(--accent); }
 
 /* ---------- Mobile ---------- */
 @media (max-width: 860px) {
