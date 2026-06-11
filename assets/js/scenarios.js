@@ -15,8 +15,8 @@ window.SCENARIOS = {
     transcript:
       "Ähm, ja — Auftrag Kessler, Gartenstraße. Die wollen im Bad den alten Waschtisch raus und einen neuen 60er mit Halbsäule rein, dazu einen neuen Einhebelmischer. Eckventile sahen auch nicht mehr gut aus, machen wir gleich mit. Ich rechne mit zwei Mann, zusammen so acht Stunden inklusive Demontage. Entsorgung vom alten Zeug übernehmen wir. Schreib das mal als Angebot fertig.",
     positionen: [
-      { pos: 1, beschreibung: "Waschtisch 60 cm, Sanitärkeramik weiß, inkl. Halbsäule und Befestigungsmaterial — liefern und versetzen", menge: 1, einheit: "Stk.", ep: 215.0, typ: "material" },
-      { pos: 2, beschreibung: "Einhebelmischer Waschtisch, Markenfabrikat verchromt, mit Ablaufgarnitur — liefern und montieren", menge: 1, einheit: "Stk.", ep: 135.0, typ: "material" },
+      { pos: 1, beschreibung: "Waschtisch 60 cm, Sanitärkeramik weiß, inkl. Halbsäule und Befestigungsmaterial — liefern", menge: 1, einheit: "Stk.", ep: 215.0, typ: "material" },
+      { pos: 2, beschreibung: "Einhebelmischer Waschtisch, Markenfabrikat verchromt, mit Ablaufgarnitur — liefern", menge: 1, einheit: "Stk.", ep: 135.0, typ: "material" },
       { pos: 3, beschreibung: "Eckventile erneuern, Design-Siphon und Kleinmaterial (Dichtungen, Anschlussschläuche)", menge: 1, einheit: "psch.", ep: 48.0, typ: "material" },
       { pos: 4, beschreibung: "Demontage Altbestand, Montage komplett inkl. Anschluss und Dichtheitsprüfung — 2 Monteure, Monteurstunden", menge: 8, einheit: "Std.", ep: 72.0, typ: "lohn" },
       { pos: 5, beschreibung: "An- und Abfahrt inkl. fachgerechter Entsorgung Altmaterial", menge: 1, einheit: "psch.", ep: 65.0, typ: "pauschale" }
