@@ -10,8 +10,21 @@ Vertrag: `agent-studio/.planning/one-prompt/angebots-blitz/CONCEPT.md`
 | 1 MVP-Kern | Playwright: 3 Szenarien e2e, Summen centgenau (§3), Fachsprache | **GRÜN 42/42**, 2× gelaufen, 0 Flakes |
 | 2 Features | API-Schema mit Fixture, Origin-403, Cap-429 graceful, PDF, Brand-Wechsler | **GRÜN 27/27**, 2× gelaufen, inkl. 2 echte Gemini-Calls |
 | 3 Polish | 390px ohne Overflow, OG-Tags, Gewicht, A11y | **GRÜN 21/21**, 2× gelaufen |
-| 4 Ship | E2E live 2× inkl. echtem /api/quote | — |
-| 5 Excellence | 10 Schwächen → Top-5-Fix → Suite 2× | — |
+| 4 Ship | E2E live 2× inkl. echtem /api/quote | **GRÜN** — alle 3 Suiten 2× gegen https://angebots-blitz.demo.osai.solutions, inkl. 2 echte Gemini-Calls über die Live-API |
+| 5 Excellence | 10 Schwächen → Top-5-Fix → Suite 2× | **GRÜN** — s. u. |
+
+## Excellence-Pass: 10 Schwächen, ehrlich
+
+1. **Kein Skip** — ein Meister in Eile musste die 30-s-Show aushalten → **FIX:** „Direkt zum Ergebnis »"-Button (beschleunigt die laufende Show auf 2 %, Summen bleiben exakt; getestet: < 8 s statt ~25 s).
+2. **Kein Szenario-Wechsel im Stage-Bereich** — für Nr. 2/3 musste man hochscrollen → **FIX:** Stage-Tabs (SHK/Elektro/Maler) direkt über dem Dokument.
+3. **Mobil lief die Show unterhalb des Viewports** — Transkript oben, Positionen poppten unsichtbar → **FIX:** Auto-Scroll zum Dokument, sobald die Positionen aufbauen.
+4. **„Mit Ihrem Logo" war nur behauptet** — Brand-Wechsler hatte nur 3 fiktive Presets → **FIX:** „+ Dein Betrieb?"-Chip: eigener Firmenname → Monogramm + Farbe live im Briefkopf (der Conversion-Moment).
+5. **Gemini-Key stand als URL-Query-Param** in jedem Request → **FIX:** `x-goog-api-key`-Header, Key taucht in keinem URL-Log mehr auf.
+6. **Live-Pfad ohne Beispiel, was man sagen soll** → **FIX (Bonus):** Beispiel-Satz unter dem Record-Button.
+7. Ganze Sektionen als ein Reveal-Block — bei sehr schnellem Scroll kurz leere Fläche. **Akzeptiert** (Animations-Ästhetik, 0,7 s).
+8. In-Memory-Tages-Cap reset bei Cold Start. **Akzeptiert + dokumentiert** (CONCEPT §4 erlaubt den Kompromiss; Gemini-Quota als zweite Leine).
+9. TTS-Kachel-Stimme klingt aufgeräumter als ein echter Monteur. **Akzeptiert** (fürs Promo-Video sogar besser verständlich).
+10. `prefers-reduced-motion` deckt Reveals ab, aber nicht Typewriter/Count-ups. **Akzeptiert** für die Demo — die Show IST das Produkt; Skip-Button (Fix 1) ist der Ausweg.
 
 ## Entscheidungen (autonom, Begründung)
 

@@ -95,7 +95,8 @@ function capExceeded(req) {
 }
 
 async function callGemini(apiKey, model, mime, base64Audio) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  // Key im Header statt in der URL — taucht so in keinem Request-Log auf
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
   const body = {
     contents: [{
       parts: [
@@ -111,7 +112,7 @@ async function callGemini(apiKey, model, mime, base64Audio) {
   };
   const res = await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
     body: JSON.stringify(body)
   });
   if (!res.ok) {

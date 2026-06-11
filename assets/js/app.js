@@ -13,7 +13,8 @@
   function eur(n) { return fmt.format(n) + " €"; }
   function round2(n) { return Math.round(n * 100) / 100; }
   function $(sel) { return document.querySelector(sel); }
-  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms * T); }); }
+  var runSpeed = 1; // 1 = Show, klein = „Direkt zum Ergebnis"
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms * T * runSpeed); }); }
 
   /* ---------- Scroll-Reveals ---------- */
   var io = new IntersectionObserver(function (entries) {
@@ -112,7 +113,7 @@
   }
 
   async function countUp(el, target, dur, token) {
-    var t0 = performance.now(); dur = Math.max(dur * T, 1);
+    var t0 = performance.now(); dur = Math.max(dur * T * runSpeed, 1);
     return new Promise(function (resolve) {
       (function tick(now) {
         if (token !== runToken) return resolve();
@@ -140,9 +141,15 @@
   async function runScenario(quote, opts) {
     opts = opts || {};
     var token = ++runToken;
+    runSpeed = 1;
+    var skipBtn = $("#skip-btn");
+    skipBtn.hidden = false;
     var stage = $("#demo");
     stage.hidden = false;
     stage.scrollIntoView({ behavior: FAST ? "auto" : "smooth", block: "start" });
+    document.querySelectorAll(".stage-tab").forEach(function (t) {
+      t.classList.toggle("active", t.getAttribute("data-scenario") === quote.id);
+    });
 
     // Reset
     var oldBadge = $(".done-badge"); if (oldBadge) oldBadge.remove();
@@ -193,6 +200,10 @@
 
     // 3) Positionen poppen nacheinander rein (~7 s)
     $("#voice-state").textContent = "Angebot wird aufgebaut …";
+    // Mobil: das Dokument ist die Show — in den Viewport holen
+    if (!FAST && runSpeed === 1 && window.matchMedia("(max-width: 860px)").matches) {
+      $("#doc").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
     var sums = computeSums(quote.positionen);
     var tbody = $("#doc-positions");
     var runningNetto = 0;
@@ -229,6 +240,7 @@
     if (token !== runToken) return;
 
     // Fertig
+    skipBtn.hidden = true;
     $("#voice-state").textContent = "Fertig.";
     $("#doc").classList.add("done");
     var badge = document.createElement("div");
@@ -238,15 +250,53 @@
     $("#doc-toolbar").parentNode.insertBefore(badge, $("#doc-toolbar"));
   }
 
-  /* ---------- Kacheln ---------- */
-  document.querySelectorAll(".tile").forEach(function (tile) {
-    tile.addEventListener("click", function () {
-      document.querySelectorAll(".tile").forEach(function (t) { t.classList.remove("playing"); });
-      tile.classList.add("playing");
-      var sc = window.SCENARIOS[tile.getAttribute("data-scenario")];
-      runScenario(sc, { live: false });
+  /* ---------- Kacheln + Stage-Tabs ---------- */
+  function startScenario(id) {
+    document.querySelectorAll(".tile").forEach(function (t) {
+      t.classList.toggle("playing", t.getAttribute("data-scenario") === id);
     });
+    runScenario(window.SCENARIOS[id], { live: false });
+  }
+  document.querySelectorAll(".tile").forEach(function (tile) {
+    tile.addEventListener("click", function () { startScenario(tile.getAttribute("data-scenario")); });
   });
+  document.querySelectorAll(".stage-tab").forEach(function (tab) {
+    tab.addEventListener("click", function () { startScenario(tab.getAttribute("data-scenario")); });
+  });
+
+  /* ---------- Skip: „Direkt zum Ergebnis" ---------- */
+  $("#skip-btn").addEventListener("click", function () {
+    runSpeed = 0.02;
+    stopClip();
+    $("#skip-btn").hidden = true;
+  });
+
+  /* ---------- „Dein Betrieb"-Chip (Conversion-Moment) ---------- */
+  var CUSTOM_COLORS = ["#0f9d58", "#7c4dff", "#0aa2c0", "#d81b60", "#e8554d"];
+  var customChip = document.createElement("button");
+  customChip.type = "button";
+  customChip.className = "brand-chip brand-chip-custom";
+  customChip.setAttribute("data-brand", "custom");
+  customChip.setAttribute("data-testid", "brand-custom");
+  customChip.innerHTML = '<span class="chip-dot" style="background:#5c6470">+</span>Dein Betrieb?';
+  customChip.addEventListener("click", function () {
+    var name = (window.prompt("Wie heißt dein Betrieb?") || "").trim();
+    if (!name) return;
+    var words = name.split(/\s+/);
+    var mono = (words[0][0] + (words[1] ? words[1][0] : (words[0][1] || ""))).toUpperCase();
+    var hash = 0;
+    for (var i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+    var color = CUSTOM_COLORS[hash % CUSTOM_COLORS.length];
+    window.BRANDS.custom = {
+      id: "custom", name: name, mono: mono, color: color,
+      tagline: "Dein Gewerk · Deine Stadt", strasse: "Deine Straße 1", ort: "Dein Ort",
+      tel: "0000 / 00 00 00", mail: "info@" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + ".de",
+      ust: "DE 000 000 000"
+    };
+    customChip.innerHTML = '<span class="chip-dot" style="background:' + color + '">' + mono + "</span>" + name;
+    applyBrand("custom");
+  });
+  chipsWrap.appendChild(customChip);
 
   /* ============================================================
      Live-Pfad: MediaRecorder → POST /api/quote → selbes Template

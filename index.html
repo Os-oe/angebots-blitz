@@ -76,6 +76,11 @@
 
     <!-- ===== Demo-Stage ===== -->
     <section class="stage-section" id="demo" hidden>
+      <div class="stage-tabs" id="stage-tabs" data-testid="stage-tabs">
+        <button class="stage-tab" data-scenario="shk" type="button">SHK · Bad</button>
+        <button class="stage-tab" data-scenario="elektro" type="button">Elektro</button>
+        <button class="stage-tab" data-scenario="maler" type="button">Maler</button>
+      </div>
       <div class="stage">
         <!-- Sprachnotiz / Transkript -->
         <div class="voice-panel" data-testid="voice-panel">
@@ -89,6 +94,7 @@
           </div>
           <p class="voice-transcript" id="voice-transcript" data-testid="transcript" aria-live="polite"></p>
           <div class="ki-steps" id="ki-steps" aria-live="polite"></div>
+          <button class="skip-btn" id="skip-btn" data-testid="skip-btn" type="button" hidden>Direkt zum Ergebnis&nbsp;»</button>
         </div>
 
         <!-- Dokument-Viewer -->
@@ -190,6 +196,7 @@
           </button>
           <div class="rec-timer" id="rec-timer" hidden>0:00</div>
           <p class="live-status" id="live-status" data-testid="live-status"></p>
+          <p class="live-hint">z.&nbsp;B.: „Auftrag Müller — Gäste-WC, neues Handwaschbecken montieren, Siphon erneuern, ich rechne drei Stunden, Anfahrt wie üblich.“</p>
           <p class="dsgvo-line">🔒 Deine Aufnahme wird nur zur Angebotserstellung verarbeitet und nicht gespeichert.</p>
         </div>
       </div>

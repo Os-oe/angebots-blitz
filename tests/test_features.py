@@ -137,7 +137,34 @@ def ui_tests():
         check("Cap-Fail → graceful Stage-Fallback + Erstgespräch-CTA", "Tages-Limit" in status and "Erstgespräch" in status, status)
         check("Record-Button wieder aktiv", page.evaluate("!document.querySelector('#rec-btn').disabled"))
 
+        # 10) Excellence: Stage-Tabs wechseln das Szenario im Dokument
+        page.click(".stage-tab[data-scenario=elektro]")
+        page.wait_for_selector("[data-testid=done-badge]", timeout=30000)
+        check("Stage-Tab wechselt Szenario", "AB-2026-1043" in page.text_content("[data-testid=doc-nr]"))
+        check("Stage-Tab active-State", "active" in (page.get_attribute(".stage-tab[data-scenario=elektro]", "class") or ""))
+
+        # 11) Excellence: „Dein Betrieb"-Chip übernimmt den eigenen Namen
+        page.evaluate("window.prompt = () => 'Schreinerei Holzwurm GmbH'; 1")
+        page.click("[data-testid=brand-custom]")
+        check("Custom-Brand: Firmenname im Briefkopf", page.text_content("#doc-firm-name") == "Schreinerei Holzwurm GmbH")
+        check("Custom-Brand: Monogramm SH", page.text_content("#doc-logo") == "SH")
+
         check("keine JS-Pageerrors", not errors, "; ".join(errors[:3]))
+
+        # 12) Excellence: Skip — „Direkt zum Ergebnis" beendet die Show in Sekunden
+        slow = browser.new_page(viewport={"width": 1280, "height": 900})
+        slow.goto(BASE + "/", wait_until="networkidle")  # OHNE fast=1
+        slow.click("[data-testid=tile-maler]")
+        slow.wait_for_selector("[data-testid=skip-btn]:visible", timeout=5000)
+        slow.wait_for_timeout(1200)
+        slow.click("[data-testid=skip-btn]")
+        try:
+            slow.wait_for_selector("[data-testid=done-badge]", timeout=8000)
+            check("Skip: Ergebnis in < 8 s statt ~25 s", True)
+        except Exception:
+            check("Skip: Ergebnis in < 8 s statt ~25 s", False)
+        check("Skip: Summen trotzdem exakt", slow.text_content("[data-testid=sum-brutto]").replace("\xa0", " ").strip() == "1.236,29 €")
+        slow.close()
         browser.close()
 
 def main():
