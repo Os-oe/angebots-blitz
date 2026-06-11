@@ -218,8 +218,8 @@
       tr.innerHTML =
         "<td>" + (p.pos || i + 1) + "</td>" +
         '<td class="pos-desc">' + p.beschreibung + '<br><span class="pos-typ ' + p.typ + '">' + p.typ + "</span></td>" +
-        '<td class="num">' + fmt.format(p.menge).replace(",00", "") + "</td>" +
-        "<td>" + p.einheit + "</td>" +
+        '<td class="num">' + fmt.format(p.menge).replace(",00", "") + '<span class="unit-inline">&nbsp;' + p.einheit + "</span></td>" +
+        '<td class="unit-col">' + p.einheit + "</td>" +
         '<td class="num">' + fmt.format(p.ep) + "</td>" +
         '<td class="num">' + fmt.format(gp) + "</td>";
       tbody.appendChild(tr);
