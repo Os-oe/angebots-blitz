@@ -407,5 +407,6 @@ button { font-family: inherit; cursor: pointer; }
   .stage { display: block; max-width: none; }
   .doc { box-shadow: none; border-radius: 0; padding: 0; font-size: 12px; }
   .doc-demo-stamp { display: none; }
+  .pos-typ { display: none; } /* UI-Chips gehören nicht aufs gedruckte Angebot */
   .doc-table .pos-row { opacity: 1 !important; transform: none !important; }
 }
