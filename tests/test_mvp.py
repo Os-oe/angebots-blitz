@@ -71,6 +71,11 @@ def run(page):
         check(f"{sid}: Transkript steht", len(page.text_content("[data-testid=transcript]") or "") > 80)
         check(f"{sid}: Bindefrist 4 Wochen", "4 Wochen" in page.text_content("#doc-bindefrist"))
         check(f"{sid}: Angebots-Nr gesetzt", "AB-2026-" in page.text_content("[data-testid=doc-nr]"))
+        # KI-Schritte konsistent: Material-Schritt nur, wenn Material-Positionen existieren
+        ki = page.text_content("#ki-steps") or ""
+        has_material = sid in ("shk", "elektro")
+        check(f"{sid}: Material-Schritt {'da' if has_material else 'weg (kein Material)'}",
+              ("Material" in ki) == has_material, ki)
 
     # --- Dokument-Pflichtteile (CONCEPT §2.3)
     terms = page.text_content("#doc-terms")

@@ -182,12 +182,13 @@
 
     // 2) KI-Schritte (~4 s)
     $("#voice-state").textContent = "KI kalkuliert …";
+    var hasMaterial = quote.positionen.some(function (p) { return p.typ === "material"; });
     var steps = [
       "Gewerk erkannt: " + quote.gewerk,
       quote.stundensatz ? "Stundenverrechnungssatz: " + quote.stundensatz + " €/h" : "Kalkulation über m²-Sätze",
-      "Material +15 % Aufschlag einkalkuliert",
+      hasMaterial ? "Material +15 % Aufschlag einkalkuliert" : null,
       "Positionen in Fachsprache formuliert"
-    ];
+    ].filter(Boolean);
     for (var s = 0; s < steps.length; s++) {
       if (token !== runToken) return;
       var st = document.createElement("div");
